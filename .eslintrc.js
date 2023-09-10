@@ -19,11 +19,10 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['vue', 'prettier'],
+  plugins: ['vue'],
   rules: {
     'require-jsdoc': 'off',
     'max-len': 'off',
     'object-curly-spacing': 'off',
-    'prettier/prettier': 'warn',
   },
 };

@@ -26,20 +26,23 @@ const submit = () => {
   console.log('username: ' + username.value);
   console.log('password: ' + password.value);
 
-  if (username.value === 'admin' && password.value === '123456') {
-    proxy.messageAlert({
-      title: 'Login',
-      message: 'Login success!',
-      onConfirm: () => {
-        console.log('confirm');
-      },
-      onCancel: () => {
-        console.log('cancel');
-      },
+  proxy.axios({
+    method: 'post',
+    url: '/login',
+    data: {
+      username: username.value,
+      password: password.value,
+    },
+  }).then((res)=> {
+    console.log(res.data);
+    proxy.messageBox({
+      message: 'login message',
+      title: 'login',
+      ok: 'confirm',
+    }).then(() => {
+      console.log('confirm');
     });
-  } else {
-    alert('Login failed!');
-  }
+  });
 };
 </script>
 
