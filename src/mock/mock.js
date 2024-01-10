@@ -1,9 +1,8 @@
 import Mock from 'mockjs';
 
-Mock.mock('/login', 'post', (params)=> {
-  const {username, password} = JSON.parse(params.body);
+Mock.mock('/login', 'post', (params) => {
+  const { username, password } = JSON.parse(params.body);
   const res = {
-    status: 200,
     data: {
       message: 'success',
       token: '',

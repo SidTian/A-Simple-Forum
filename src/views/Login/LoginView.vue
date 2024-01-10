@@ -9,40 +9,45 @@
         <input type="password" autocomplete="password" v-model="password" />
       </div>
       <div class="submit">
-        <button @click="submit">Submit</button>
+        <button @click="submit" :disabled="isLogin">{{isLogin ? "Submitting" : "Submit"}}</button>
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from 'vue';
-import { getCurrentInstance } from 'vue';
-const { proxy } = getCurrentInstance();
+import { useUserStore } from '@/stores/user';
+import { http } from '@/axios/index';
 
+const userStore = useUserStore();
 const username = ref('admin');
 const password = ref('123456');
-
+const isLogin = ref(false);
 const submit = () => {
-  console.log('username: ' + username.value);
-  console.log('password: ' + password.value);
+  isLogin.value = true;
 
-  proxy.axios({
+  http({
     method: 'post',
     url: '/login',
     data: {
       username: username.value,
       password: password.value,
     },
-  }).then((res)=> {
-    console.log(res.data);
-    proxy.messageBox({
-      message: 'login message',
-      title: 'login',
-      ok: 'confirm',
-    }).then(() => {
-      console.log('confirm');
+  })
+    .then((res) => {
+      console.log(res);
+      setTimeout(()=> {
+        if (res.data.code) {
+          userStore.login(res.data);
+        } else {
+          alert('incorrect username or password');
+        };
+        isLogin.value = false;
+      }, 1000);
+    })
+    .catch((err)=> {
+      console.log(err);
     });
-  });
 };
 </script>
 
