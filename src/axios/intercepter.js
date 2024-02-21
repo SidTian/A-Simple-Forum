@@ -22,8 +22,11 @@ export function useInterceptor(axios) {
   axios.interceptors.response.use(
     (response) => {
       // 处理响应
-      response.status = 400;
+      // response.status = 400;
       if (response.status == 200) {
+        if (response.data.data.code == 0) {
+          return Promise.reject(new Error('Server Error! Please try later'));
+        }
         return Promise.resolve(response.data);
       } else {
         console.log('error');

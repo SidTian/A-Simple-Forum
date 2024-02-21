@@ -48,6 +48,7 @@ const { onOK, onCancel, message } = defineProps({
 const promptContent = ref('');
 
 const visiable = ref(false);
+
 const setVisiable = (vis) => {
   visiable.value = vis;
 };
@@ -67,7 +68,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .messagebox-fade-enter-from,
 .messagebox-fade-leave-to {
   opacity: 0;

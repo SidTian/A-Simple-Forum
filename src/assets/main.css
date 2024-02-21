@@ -1,4 +1,5 @@
-@import "resetStyle.css";
+@import 'resetStyle.css';
+@import 'iconfont.css';
 
 html {
   width: 96%;

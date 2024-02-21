@@ -9,7 +9,7 @@
         <input type="password" autocomplete="password" v-model="password" />
       </div>
       <div class="submit">
-        <button @click="submit" :disabled="isLogin">{{isLogin ? "Submitting" : "Submit"}}</button>
+        <button @click="submit" :disabled="isLogin">{{ isLogin ? 'Submitting' : 'Submit' }}</button>
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/user';
-import { http } from '@/axios/index';
+// import messageAlert from '@/components/MessageAlert/MessageAlert.js';
 
 const userStore = useUserStore();
 const username = ref('admin');
@@ -25,33 +25,20 @@ const password = ref('123456');
 const isLogin = ref(false);
 const submit = () => {
   isLogin.value = true;
+  // messageAlert({ message: '登录成功', duration: 2000 });
 
-  http({
-    method: 'post',
-    url: '/login',
-    data: {
-      username: username.value,
-      password: password.value,
-    },
-  })
-    .then((res) => {
-      console.log(res);
-      setTimeout(()=> {
-        if (res.data.code) {
-          userStore.login(res.data);
-        } else {
-          alert('incorrect username or password');
-        };
-        isLogin.value = false;
-      }, 1000);
-    })
-    .catch((err)=> {
-      console.log(err);
-    });
+  const data = {
+    username: username.value,
+    password: password.value,
+  };
+  setTimeout(() => {
+    userStore.login(data);
+    isLogin.value = false;
+  }, 1000);
 };
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 #login {
   display: flex;
   flex-direction: column;
